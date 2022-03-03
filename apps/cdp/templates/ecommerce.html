@@ -1,0 +1,293 @@
+[[extend 'layout.html']] [[block content]]
+
+<!-- inserted tracker start -->
+<script type="text/javascript">
+  var path = location.pathname + location.hash;
+  var unomiOption = {
+    scope: "example",
+    url: "http://3.113.215.104:8181",
+    initialPageProperties: {
+      path: path,
+      pageInfo: {
+        destinationURL: location.href,
+        tags: ["tag1", "tag2", "tag3"],
+        categories: ["category1", "category2", "category3"],
+      },
+      interests: {
+        interest1: 1,
+        interest2: 2,
+        interest3: 3,
+      },
+    },
+  };
+  window.unomiTracker || (window.unomiTracker = {});
+  (function () {
+    var unomiTracker_queue = [];
+
+    var methods = [
+      "trackSubmit",
+      "trackClick",
+      "trackLink",
+      "trackForm",
+      "initialize",
+      "pageview",
+      "identify",
+      "reset",
+      "group",
+      "track",
+      "ready",
+      "alias",
+      "debug",
+      "page",
+      "once",
+      "off",
+      "on",
+      "personalize",
+    ];
+
+    var factory = function (method) {
+      return function () {
+        var args = Array.prototype.slice.call(arguments);
+        args.unshift(method);
+        unomiTracker_queue.push(args);
+        return window.unomiTracker;
+      };
+    };
+
+    // For each of the methods, generate a queueing stub
+    for (var i = 0; i < methods.length; i++) {
+      var method = methods[i];
+      window.unomiTracker[method] = factory(method);
+    }
+
+    function callback(e) {
+      unomiTracker.initialize({
+        "Apache Unomi": unomiOption,
+      });
+
+      // Loop through the interim analytics queue and reapply the calls to their proper analytics.js methods
+      while (unomiTracker_queue.length > 0) {
+        var item = unomiTracker_queue.shift();
+        var method = item.shift();
+        if (unomiTracker[method]) {
+          unomiTracker[method].apply(unomiTracker, item);
+        }
+      }
+    }
+
+    // Define a method to load Analytics.js from our CDN, and that will be sure to only ever load it once
+    unomiTracker.load = function () {
+      // create an async script element based on your key
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.async = true;
+      script.src = unomiOption.url + "/tracker/unomi-tracker.js";
+
+      if (script.addEventListener) {
+        script.addEventListener(
+          "load",
+          function (e) {
+            if (typeof callback === "function") {
+              callback(e);
+            }
+          },
+          false
+        );
+      } else {
+        script.onreadystatechange = function () {
+          if (this.readyState === "complete" || this.readyState === "loaded") {
+            callback(window.event);
+          }
+        };
+      }
+
+      // insert our script next to the first script element
+      var first = document.getElementsByTagName("script")[0];
+      first.parentNode.insertBefore(script, first);
+    };
+
+    document.addEventListener("DOMContentLoaded", unomiTracker.load);
+    
+
+    unomiTracker.page(unomiOption.initialPageProperties);
+  
+  })();
+
+  
+</script>
+
+<!-- inserted tracker end -->
+<div class="box">
+  CDP personalization product list
+</div>
+<div id="profileId">
+</div>
+<div id="sessionId">
+</div>
+<div class="columns">
+  <div class="column">
+    <div class="cat">
+      <div class="cat-img">
+        <img src="../static/images/cat2.webp" />
+      </div>
+      <div class="cat-words">
+        <i class="shadow">Girl's Cloth</i>
+        <h2>Girl Cloth</h2>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div id="var2" class="cat" style="display: none">
+      <div class="cat-img">
+        <img src="../static/images/cat1.webp" />
+      </div>
+      <div class="cat-words">
+        <i class="shadow">Women's Cloth</i>
+        <h2>Women's Cloth</h2>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div id="var1" class="cat" style="display: none">
+      <div class="cat-img">
+        <img src="../static/images/cat3.webp" />
+      </div>
+      <div class="cat-words">
+        <h2>Man's Cloth</h2>
+        <button>Bwst New Deals</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- insert personalize starts -->
+<script type="text/javascript">
+  unomiTracker.track('articleCompleted', {
+    title: 'How to Create a Tracking Plan',
+    course: 'Intro to Analytics'
+});
+  unomiTracker.personalize(
+    {
+      id: "testPersonalization",
+      strategy: "matching-first",
+      strategyOptions: { fallback: "var1" },
+      contents: [
+        {
+          id: "var1",
+          filters: [
+            {
+              condition: {
+                type: "profilePropertyCondition",
+                parameterValues: {
+                  propertyName: "properties.gender",
+                  comparisonOperator: "equals",
+                  propertyValue: "male",
+                },
+              },
+            },
+          ],
+        },
+        {
+          id: "var2",
+        },
+      ],
+    },
+    function (res) {
+      console.log(res);
+      console.log("profile id : "+window.cxs.profileId );
+      console.log("session id : "+window.cxs.sessionId );
+      document.getElementById("profileId").innerHTML = "ProfileID:  " + window.cxs.profileId;
+      document.getElementById("sessionId").innerHTML = "SessionID:  " + window.cxs.sessionId;
+      document.getElementById(res[0]).style.display = "block";
+    }
+    
+  );
+  
+</script>
+<!-- insert personalize ends -->
+
+<div class="box">
+  Other Clouth product static list
+</div>
+<div class="columns">
+  <div class="column">
+    <div class="product">
+      <div class="cat-img">
+        <img src="../static/images/product1.webp" />
+      </div>
+      <div class="product-words">
+        <h2>&starf; &starf; &starf; &starf; &starf;</h2>
+        <p>Dress with details</p>
+        <b>$40.00 <del>$60.00</del></b>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="product">
+      <div class="cat-img">
+        <img src="../static/images/product3.webp" />
+      </div>
+      <div class="product-words">
+        <h2>&starf; &starf; &starf; &starf; &starf;</h2>
+        <p>Dress with details</p>
+        <b>$40.00 <del>$60.00</del></b>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="product">
+      <div class="cat-img">
+        <img src="../static/images/product4.webp" />
+      </div>
+      <div class="product-words">
+        <h2>&starf; &starf; &starf; &starf; &starf;</h2>
+        <p>Dress with details</p>
+        <b>$40.00 <del>$60.00</del></b>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="columns">
+  <div class="column">
+    <div class="product">
+      <div class="cat-img">
+        <img src="../static/images/product5.webp" />
+      </div>
+      <div class="product-words">
+        <h2>&starf; &starf; &starf; &starf; &starf;</h2>
+        <p>Dress with details</p>
+        <b>$40.00 <del>$60.00</del></b>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="product">
+      <div class="cat-img">
+        <img src="../static/images/product6.webp" />
+      </div>
+      <div class="product-words">
+        <h2>&starf; &starf; &starf; &starf; &starf;</h2>
+        <p>Dress with details</p>
+        <b>$40.00 <del>$60.00</del></b>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="product">
+      <div class="cat-img">
+        <img src="../static/images/product6.webp" />
+      </div>
+      <div class="product-words">
+        <h2>&starf; &starf; &starf; &starf; &starf;</h2>
+        <p>Dress with details</p>
+        <b>$60.00 <del>$70.00</del></b>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+[[end]]

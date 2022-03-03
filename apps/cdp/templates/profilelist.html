@@ -1,0 +1,60 @@
+[[extend 'layout.html']]
+[[block content]]
+
+<div class="box">
+ Profile List:
+</div>
+
+<div class="box">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><abbr title="Position">ProfileID</abbr></th>
+        <th><abbr title="Position">Show Session</abbr></th>
+        <th>Show Profile Details</th>
+        <th>Upate Profile</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+  
+      [[for profile in profilelist:]]
+       
+      <tr>
+        <td>[[=profile['itemId']]]</td>
+        <td><a href="[[=URL('session')]]?profileid=[[=profile['itemId']]]"> Show session</a></td>
+        <td><a href="[[=URL('profileview')]]?profileid=[[=profile['itemId']]]"> Show Profile Details</td>
+        <td><a href="[[=URL('profileedit')]]?profileid=[[=profile['itemId']]]">Update Profile </a></td>
+        
+      </tr>
+  
+      [[ pass ]]
+  
+    </tbody>
+  </table>
+</div>
+<!-- <div class="section">
+  <div class="vars">
+      [[from json2html import *]]
+      [[for profile in profilelist:]]
+      <hr>
+        <a href="[[=URL('session')]]?profileid=[[=profile['itemId']]]">Show Sessions of Profile [[=profile['itemId']]]</a>
+        <br>
+        <a href="[[=URL('profileedit')]]?profileid=[[=profile['itemId']]]">Update Profile </a>
+        <div>
+            [[= XML(json2html.convert(json = profile,escape='off',table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"")) ]]
+        </div>
+        <div>
+          [[=profile.get('itemId')]]
+        </div>
+        
+      </hr>
+      <br>
+      <br>
+      <br>
+      [[ pass ]]
+  </div>
+</div> -->
+
+[[end]]
+

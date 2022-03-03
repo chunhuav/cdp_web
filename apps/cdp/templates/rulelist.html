@@ -1,0 +1,16 @@
+[[extend 'layout.html']]
+[[block content]]
+<div class="section">
+  <div class="vars">
+      [[from json2html import *]]
+      [[for rule in rulelist:]]
+      <hr>
+      <div>
+      [[= XML(json2html.convert(json = rule,escape='off')) ]]
+    </div>
+</hr>
+      [[ pass ]]
+  </div>
+</div>
+[[end]]
+

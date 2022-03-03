@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <base href="[[=URL('static')]]/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="shortcut icon"
+      href="data:image/x-icon;base64,AAABAAEAAQEAAAEAIAAwAAAAFgAAACgAAAABAAAAAgAAAAEAIAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAAA=="
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+      crossorigin="anonymous"
+    />
+    <style>
+      .py4web-validation-error {
+        margin-top: -16px;
+        font-size: 0.8em;
+        color: red;
+      }
+    </style>
+    [[block page_head]]
+    <!-- individual pages can customize header here -->
+    [[end]]
+  </head>
+  <style></style>
+  <body>
+    <div id="app">
+
+
+      <section class="main-content columns is-fullheight">
+        <aside
+          class="column is-2 is-narrow-mobile is-fullheight section is-hidden-mobile"
+        >
+          <p class="menu-label is-hidden-touch">Navigation</p>
+          <ul class="menu-list">
+            <li>
+              <a href="[[=URL('ecommerce')]]" class="">
+                <span class="icon"><i class="fa fa-cookie-bite"></i></span> Ecommerce Website 
+              </a>
+            </li>
+            <!-- <li>
+              <a href="[[=URL('ecommerce_segment')]]" class="">
+                <span class="icon"><i class="fa fa-cookie-bite"></i></span> EComme Website (Segment) 
+              </a>
+            </li> -->
+            <li>
+              <a href="[[=URL('dashboard')]]" class="">
+                <span class="icon"><i class="fa fa-home"></i></span> Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="[[=URL('dashboard')]]" class="">
+                <span class="icon"><i class="fa fa-table"></i></span> Unomi
+              </a>
+
+              <ul>
+                <li>
+                  <a href="[[=URL('profilelist')]]">
+                    <span class="icon is-small"
+                      ><i class="fa fa-link"></i
+                    ></span>
+                    All Profiles
+                  </a>
+                </li>
+                <li>
+                  <a href="[[=URL('profilesearch')]]">
+                    <span class="icon is-small"
+                      ><i class="fa fa-link"></i
+                    ></span>
+                    ProfileSearch
+                  </a>
+                </li>
+                <li>
+                  <a href="[[=URL('rulelist')]]">
+                    <span class="icon is-small"
+                      ><i class="fa fa-link"></i
+                    ></span>
+                    RuleList
+                  </a>
+                </li>
+                <li>
+                  <a href="[[=URL('createsegment')]]">
+                    <span class="icon is-small"
+                      ><i class="fa fa-link"></i
+                    ></span>
+                    Create Segment
+                  </a>
+                </li>
+                <li>
+                  <a href="[[=URL('segmentlist')]]">
+                    <span class="icon is-small"
+                      ><i class="fa fa-link"></i
+                    ></span>
+                   Segment List
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+          </ul>
+        </aside>
+
+        <div class="container column is-10">
+          [[block content]] my default content (this content to be replaced)
+          [[end]]
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

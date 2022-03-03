@@ -1,0 +1,69 @@
+[[extend 'layout.html']]
+
+
+[[block content]]
+
+
+
+
+    <div class="columns">
+        <div class="column">
+          Dashboard
+        </div>
+      </div>
+    <div class="columns">
+        <div class="column">
+            <div class="container is-fluid">
+                <div class="notification is-primary">
+                    <div class="heading">Profiles</div>
+                    <div class="title">[[=profilecount]]</div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="container is-fluid">
+                <div class="notification is-primary">
+                    <div class="heading">Agents</div>
+                </div>
+            
+                    <div class="title"> 
+                        [[from json2html import *]]
+                        [[= XML(json2html.convert(json = agent_list,table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"",escape='off')) ]]
+                    </div>                
+            </div>
+        </div>
+    </div>
+
+      <div class="columns">
+
+        <div class="column">
+            <div class="container is-fluid">
+                <div class="notification is-primary">
+                    <div class="heading">Visits by Date</div>
+                </div>
+            
+                    <div class="title"> 
+                        [[from json2html import *]]
+                        [[= XML(json2html.convert(json = profilevisitdate_list,table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"",escape='off')) ]]
+                    </div>                
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="container is-fluid">
+                <div class="notification is-primary">
+                    <div class="heading">Pages Visits</div>
+                </div>
+            
+                <div class="title">[[from json2html import *]]
+                    [[= XML(json2html.convert(json = path_list,table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"",escape='off')) ]]</div>              
+            </div>
+        </div>
+
+
+        </div>
+
+
+
+[[end]]
+

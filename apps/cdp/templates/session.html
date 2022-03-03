@@ -1,0 +1,24 @@
+[[extend 'layout.html']]
+[[block content]]
+<div class="section">
+
+  <div class="vars">
+      [[from json2html import *]]
+      [[for session in sessionlist:]]
+      Show Events of Session ID:
+      <a href="[[=URL('eventlist')]]?sessionid=[[=session['itemId']]]"> [[=session['itemId']]]</a>
+
+        
+      <hr>
+        <div>
+            [[= XML(json2html.convert(json = session,table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"",escape='off')) ]]
+        </div>
+      </hr>
+      <br>
+      <br>
+      <br>
+      [[ pass ]]
+  </div>
+</div>
+
+[[end]]
